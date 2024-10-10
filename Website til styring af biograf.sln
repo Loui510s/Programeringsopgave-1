@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website til styring af biograf", "Website til styring af biograf\Website til styring af biograf.csproj", "{C836A5D9-A4DC-47C2-8064-EEB0C600EEBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website til biograf", "Website til biograf\Website til biograf.csproj", "{C8ED1C2F-C5D7-4A88-A4EB-A89F6890BF7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C836A5D9-A4DC-47C2-8064-EEB0C600EEBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C836A5D9-A4DC-47C2-8064-EEB0C600EEBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C836A5D9-A4DC-47C2-8064-EEB0C600EEBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C836A5D9-A4DC-47C2-8064-EEB0C600EEBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8ED1C2F-C5D7-4A88-A4EB-A89F6890BF7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8ED1C2F-C5D7-4A88-A4EB-A89F6890BF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8ED1C2F-C5D7-4A88-A4EB-A89F6890BF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8ED1C2F-C5D7-4A88-A4EB-A89F6890BF7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
