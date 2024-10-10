@@ -1,0 +1,7 @@
+C:\Users\louie\Source\Repos\Programeringsopgave-1\Website til biograf\bin\Debug\Website til biograf.exe.config
+C:\Users\louie\Source\Repos\Programeringsopgave-1\Website til biograf\bin\Debug\Website til biograf.exe
+C:\Users\louie\Source\Repos\Programeringsopgave-1\Website til biograf\bin\Debug\Website til biograf.pdb
+C:\Users\louie\Source\Repos\Programeringsopgave-1\Website til biograf\obj\Debug\Website til biograf.csproj.AssemblyReference.cache
+C:\Users\louie\Source\Repos\Programeringsopgave-1\Website til biograf\obj\Debug\Website til biograf.csproj.CoreCompileInputs.cache
+C:\Users\louie\Source\Repos\Programeringsopgave-1\Website til biograf\obj\Debug\Website til biograf.exe
+C:\Users\louie\Source\Repos\Programeringsopgave-1\Website til biograf\obj\Debug\Website til biograf.pdb
