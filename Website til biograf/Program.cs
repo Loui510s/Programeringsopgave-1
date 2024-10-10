@@ -1,20 +1,18 @@
-//bestem hvad der bliver brugt
 using System;
 using System.Collections.Generic;
-//lav namespace
+
 namespace Website_til_styring_af_biograf
 {
-    //opret klasse
     internal class Program
     {
-        //opret static void
         static void Main(string[] args)
         {
-            //få input med navn og kode
+            // Få input med navn og kode
             Console.WriteLine("Indtast navn");
-            Console.ReadLine();
+            string navn = Console.ReadLine();
             Console.WriteLine("Indtast kodeord");
-            Console.ReadLine();
+            string kodeord = Console.ReadLine();
+
             // Opret en liste af film
             List<string> filmListe = new List<string>
             {
@@ -22,6 +20,7 @@ namespace Website_til_styring_af_biograf
                 "Shrek 4",
                 "Fat Albert"
             };
+
         FilmValg:
             // Udskriv menuen med filmene
             Console.WriteLine("Vælg en film du gerne vil se, ved at indtaste nummeret:");
@@ -43,20 +42,22 @@ namespace Website_til_styring_af_biograf
             }
             else
             {
-                //udspyt fejlkode og lad dem prøve igen
+                // Udspyt fejlkode og lad dem prøve igen
                 Console.WriteLine("Ugyldigt valg. Prøv igen.");
                 goto FilmValg;
             }
-            SædeValg:
-            //opret en liste med sæderne
+
+        SædeValg:
+            // Opret en liste med sæderne
             List<string> sædeListe = new List<string>
-                {
-                    "Sædet helt til venstre",
-                    "Sædet til venstre fra midten",
-                    "Sædet i midten",
-                    "Sædet til højre fra midten",
-                    "Sædet helt til højre"
-                };
+            {
+                "Sædet helt til venstre",
+                "Sædet til venstre fra midten",
+                "Sædet i midten",
+                "Sædet til højre fra midten",
+                "Sædet helt til højre"
+            };
+
             // Udskriv menuen med sæderne
             Console.WriteLine("Vælg et sæde ved at indtaste nummeret:");
             for (int i = 0; i < sædeListe.Count; i++)
@@ -72,32 +73,57 @@ namespace Website_til_styring_af_biograf
             // Kontroller om input er et gyldigt tal og inden for det rigtige område
             if (int.TryParse(input2, out sædeValg) && sædeValg > 0 && sædeValg <= sædeListe.Count)
             {
-                // Vis den valgte film
+                // Vis det valgte sæde
                 Console.WriteLine($"Du har valgt: {sædeListe[sædeValg - 1]}");
             }
             else
             {
-                //udspyt fejlkode og lad dem prøve igen
+                // Udspyt fejlkode og lad dem prøve igen
                 Console.WriteLine("Ugyldigt valg. Prøv igen.");
-
                 goto SædeValg;
             }
-            //opret en liste med valg af reservation
+
+        Reservationsvalg:
+            // Opret en liste med valg af reservation
             List<string> reservationsliste = new List<string>
-                {
-                    "Ja",
-                    "Nej"
-                };
-            //Udskriv menuen med sæderne
+            {
+                "Ja",
+                "Nej"
+            };
+
+            // Udskriv menuen med reservationsvalg
+            Console.WriteLine("Vil du reservere dette sæde?");
             for (int i = 0; i < reservationsliste.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {reservationsliste[i]}");
             }
-         
 
-      
+            // Læs brugerens input
+            Console.Write("Indtast valg (1 for Ja, 2 for Nej): ");
+            string input3 = Console.ReadLine();
+            int reservationsValg;
+
+            // Kontroller om input er et gyldigt tal og inden for det rigtige område
+            if (int.TryParse(input3, out reservationsValg) && reservationsValg > 0 && reservationsValg <= reservationsliste.Count)
+            {
+                // Vis reservationsbekræftelsen
+                if (reservationsValg == 1)
+                {
+                    Console.WriteLine($"Kære {navn}, du har reserveret {sædeListe[sædeValg - 1]} til filmen {filmListe[filmValg - 1]}.");
+                }
+                else
+                {
+                    Console.WriteLine("Du valgte ikke at reservere et sæde.");
+                }
+            }
+            else
+            {
+                // Udspyt fejlkode og lad dem prøve igen
+                Console.WriteLine("Ugyldigt valg. Prøv igen.");
+                goto Reservationsvalg;
+            }
+
             Console.ReadLine();
         }
     }
 }
-
