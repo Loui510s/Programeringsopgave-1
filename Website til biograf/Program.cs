@@ -1,12 +1,16 @@
+//bestem hvad der bliver brugt
 using System;
 using System.Collections.Generic;
-
+//lav namespace
 namespace Website_til_styring_af_biograf
 {
+    //opret klasse
     internal class Program
     {
+        //opret static void
         static void Main(string[] args)
         {
+            //få input med navn og kode
             Console.WriteLine("Indtast navn");
             Console.ReadLine();
             Console.WriteLine("Indtast kodeord");
@@ -61,7 +65,7 @@ namespace Website_til_styring_af_biograf
             }
 
             // Læs brugerens input
-            Console.Write("Indtast filmnummer: ");
+            Console.Write("Indtast sædenummer: ");
             string input2 = Console.ReadLine();
             int sædeValg;
 
@@ -78,6 +82,20 @@ namespace Website_til_styring_af_biograf
 
                 goto SædeValg;
             }
+            //opret en liste med valg af reservation
+            List<string> reservationsliste = new List<string>
+                {
+                    "Ja",
+                    "Nej"
+                };
+            //Udskriv menuen med sæderne
+            for (int i = 0; i < reservationsliste.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {reservationsliste[i]}");
+            }
+         
+
+      
             Console.ReadLine();
         }
     }
