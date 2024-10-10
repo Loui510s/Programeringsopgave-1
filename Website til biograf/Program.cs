@@ -20,7 +20,7 @@ namespace Website_til_styring_af_biograf
             };
         FilmValg:
             // Udskriv menuen med filmene
-            Console.WriteLine("Vælg en film ved at indtaste nummeret:");
+            Console.WriteLine("Vælg en film du gerne vil se, ved at indtaste nummeret:");
             for (int i = 0; i < filmListe.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {filmListe[i]}");
@@ -39,10 +39,12 @@ namespace Website_til_styring_af_biograf
             }
             else
             {
+                //udspyt fejlkode og lad dem prøve igen
                 Console.WriteLine("Ugyldigt valg. Prøv igen.");
                 goto FilmValg;
             }
             SædeValg:
+            //opret en liste med sæderne
             List<string> sædeListe = new List<string>
                 {
                     "Sædet helt til venstre",
@@ -71,6 +73,7 @@ namespace Website_til_styring_af_biograf
             }
             else
             {
+                //udspyt fejlkode og lad dem prøve igen
                 Console.WriteLine("Ugyldigt valg. Prøv igen.");
 
                 goto SædeValg;
