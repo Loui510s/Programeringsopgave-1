@@ -97,8 +97,10 @@ namespace Website_til_styring_af_biograf
             Console.Write("Indtast valg (1 for Ja, 2 for Nej): ");
             string input3 = Console.ReadLine();
             int reservationsValg;
+
+            //generer et tilfældigt tal, til reservationsnummer
             Random rnd= new Random();
-            int reservationsnummer = rnd.Next(0, 999999999); // Generer et 9-cifret nummer
+            int reservationsnummer = rnd.Next(0, 999999999); 
             string formattedReservationsnummer = reservationsnummer.ToString().PadLeft(13, '0');
 
 
