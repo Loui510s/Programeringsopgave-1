@@ -113,7 +113,7 @@ namespace Website_til_styring_af_biograf
                 }
                 else
                 {
-                    Console.WriteLine("Du valgte ikke at reservere et sæde.");
+                    Console.WriteLine("Du valgte ikke at reservere et sæde til den valgte film?");
                 }
             }
             else
