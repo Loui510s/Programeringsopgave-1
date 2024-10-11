@@ -7,11 +7,6 @@ namespace Website_til_styring_af_biograf
     {
         static void Main(string[] args)
         {
-            // Få input med navn og kode
-            Console.WriteLine("Indtast navn");
-            string navn = Console.ReadLine();
-            Console.WriteLine("Indtast kodeord");
-            string kodeord = Console.ReadLine();
 
             // Opret en liste af film
             List<string> filmListe = new List<string>
@@ -102,6 +97,11 @@ namespace Website_til_styring_af_biograf
             Console.Write("Indtast valg (1 for Ja, 2 for Nej): ");
             string input3 = Console.ReadLine();
             int reservationsValg;
+            Random rnd= new Random();
+            int reservationsnummer = rnd.Next(0, 999999999); // Generer et 9-cifret nummer
+            string formattedReservationsnummer = reservationsnummer.ToString().PadLeft(13, '0');
+
+
 
             // Kontroller om input er et gyldigt tal og inden for det rigtige område
             if (int.TryParse(input3, out reservationsValg) && reservationsValg > 0 && reservationsValg <= reservationsliste.Count)
@@ -109,7 +109,13 @@ namespace Website_til_styring_af_biograf
                 // Vis reservationsbekræftelsen
                 if (reservationsValg == 1)
                 {
-                    Console.WriteLine($"Kære {navn}, du har reserveret {sædeListe[sædeValg - 1]} til filmen {filmListe[filmValg - 1]}.");
+                    // Få input med for- og efternavn
+                    Console.WriteLine("Indtast fornavn");
+                    string fornavn = Console.ReadLine();
+                    Console.WriteLine("Indtast efternavn");
+                    string efternavn = Console.ReadLine();
+                    //udskriver kvittering
+                    Console.WriteLine($"Kære {fornavn} {efternavn}, du har reserveret {sædeListe[sædeValg - 1]} til filmen {filmListe[filmValg - 1]}, med reservationsnummeret {formattedReservationsnummer}.");
                 }
                 else
                 {
