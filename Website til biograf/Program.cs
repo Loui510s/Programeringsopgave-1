@@ -1,6 +1,7 @@
+//angiver hvad der bliver brugt
 using System;
 using System.Collections.Generic;
-
+// Opretter namespace, klasser og voids.
 namespace Website_til_styring_af_biograf
 {
     internal class Program
