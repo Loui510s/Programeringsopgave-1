@@ -14,7 +14,7 @@ namespace Website_til_styring_af_biograf
                 "Shrek 4",
                 "Fat Albert"
             };
-
+            //laver filmvalg
         FilmValg:
             Console.WriteLine("Vælg en film du gerne vil se, ved at indtaste nummeret:");
             for (int i = 0; i < filmListe.Count; i++)
@@ -59,7 +59,7 @@ namespace Website_til_styring_af_biograf
             };
 
             List<string> valgteSæder = new List<string>();
-
+            //laver sædevalg
             for (int i = 0; i < antalSæder; i++)
             {
             SædeValg:
@@ -87,7 +87,7 @@ namespace Website_til_styring_af_biograf
                     goto SædeValg;
                 }
             }
-
+            //Laver reservationsvalg
         Reservationsvalg:
             List<string> reservationsliste = new List<string>
             {
@@ -107,7 +107,8 @@ namespace Website_til_styring_af_biograf
             Random rnd = new Random();
             int reservationsnummer = rnd.Next(0, 999999999); // Generer et 9-cifret nummer
             string formattedReservationsnummer = reservationsnummer.ToString().PadLeft(13, '0');
-
+            
+            //lav et reservationsvalg med evt. reservationsnummer.
             if (int.TryParse(input3, out reservationsValg) && reservationsValg > 0 && reservationsValg <= reservationsliste.Count)
             {
                 if (reservationsValg == 1)
