@@ -35,7 +35,7 @@ namespace Website_til_styring_af_biograf
                 Console.WriteLine("Ugyldigt valg. Prøv igen.");
                 goto FilmValg;
             }
-
+            SV:
             // Spørg hvor mange sæder brugeren vil reservere
             Console.WriteLine("Hvor mange sæder vil du reservere?");
             string antalSæderInput = Console.ReadLine();
@@ -45,7 +45,7 @@ namespace Website_til_styring_af_biograf
             if (!int.TryParse(antalSæderInput, out antalSæder) || antalSæder <= 0 || antalSæder > 5)
             {
                 Console.WriteLine("Ugyldigt antal. Du kan maksimalt reservere 5 sæder. Prøv igen.");
-                goto FilmValg;
+                goto SV;
             }
 
             // Liste over tilgængelige sæder
@@ -57,7 +57,7 @@ namespace Website_til_styring_af_biograf
                 "Sæde nr. 4",
                 "Sæde nr. 5"
             };
-            
+
             List<string> valgteSæder = new List<string>();
 
             for (int i = 0; i < antalSæder; i++)
@@ -94,7 +94,7 @@ namespace Website_til_styring_af_biograf
                 "Ja",
                 "Nej"
             };
-            
+
             Console.WriteLine("Vil du reservere de valgte sæder?");
             for (int i = 0; i < reservationsliste.Count; i++)
             {
@@ -104,7 +104,7 @@ namespace Website_til_styring_af_biograf
             Console.Write("Indtast valg (1 for Ja, 2 for Nej): ");
             string input3 = Console.ReadLine();
             int reservationsValg;
-            Random rnd= new Random();
+            Random rnd = new Random();
             int reservationsnummer = rnd.Next(0, 999999999); // Generer et 9-cifret nummer
             string formattedReservationsnummer = reservationsnummer.ToString().PadLeft(13, '0');
 
