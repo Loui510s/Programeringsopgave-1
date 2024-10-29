@@ -16,43 +16,39 @@ namespace Website_til_styring_af_biograf
             };
 
         FilmValg:
-            // Udskriv menuen med filmene
             Console.WriteLine("Vælg en film du gerne vil se, ved at indtaste nummeret:");
             for (int i = 0; i < filmListe.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {filmListe[i]}");
             }
 
-            // Læs brugerens input
             Console.Write("Indtast filmnummer: ");
             string input = Console.ReadLine();
             int filmValg;
 
-            // Kontroller om input er et gyldigt tal og inden for det rigtige område
             if (int.TryParse(input, out filmValg) && filmValg > 0 && filmValg <= filmListe.Count)
             {
-                // Vis den valgte film
                 Console.WriteLine($"Du har valgt: {filmListe[filmValg - 1]}");
             }
             else
             {
-                // Udspyt fejlkode og lad dem prøve igen
                 Console.WriteLine("Ugyldigt valg. Prøv igen.");
                 goto FilmValg;
             }
 
-            // Spørg hvor mange sæder brugeren vil reservere.
+            // Spørg hvor mange sæder brugeren vil reservere
             Console.WriteLine("Hvor mange sæder vil du reservere?");
             string antalSæderInput = Console.ReadLine();
             int antalSæder;
 
-            // Kontroller om input er et gyldigt tal
-            if (!int.TryParse(antalSæderInput, out antalSæder) || antalSæder <= 0)
+            // Kontroller om input er et gyldigt tal og om det er indenfor det tilladte antal
+            if (!int.TryParse(antalSæderInput, out antalSæder) || antalSæder <= 0 || antalSæder > 5)
             {
-                Console.WriteLine("Ugyldigt antal. Prøv igen.");
+                Console.WriteLine("Ugyldigt antal. Du kan maksimalt reservere 5 sæder. Prøv igen.");
                 goto FilmValg;
             }
 
+            // Liste over tilgængelige sæder
             List<string> sædeListe = new List<string>
             {
                 "Sæde nr. 1",
@@ -61,7 +57,7 @@ namespace Website_til_styring_af_biograf
                 "Sæde nr. 4",
                 "Sæde nr. 5"
             };
-
+            
             List<string> valgteSæder = new List<string>();
 
             for (int i = 0; i < antalSæder; i++)
@@ -98,7 +94,7 @@ namespace Website_til_styring_af_biograf
                 "Ja",
                 "Nej"
             };
-
+            
             Console.WriteLine("Vil du reservere de valgte sæder?");
             for (int i = 0; i < reservationsliste.Count; i++)
             {
@@ -108,7 +104,7 @@ namespace Website_til_styring_af_biograf
             Console.Write("Indtast valg (1 for Ja, 2 for Nej): ");
             string input3 = Console.ReadLine();
             int reservationsValg;
-            Random rnd = new Random();
+            Random rnd= new Random();
             int reservationsnummer = rnd.Next(0, 999999999); // Generer et 9-cifret nummer
             string formattedReservationsnummer = reservationsnummer.ToString().PadLeft(13, '0');
 
