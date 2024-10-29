@@ -1,14 +1,12 @@
-//angiver hvad der bliver brugt
 using System;
 using System.Collections.Generic;
-// Opretter namespace, klasser og voids.
+
 namespace Website_til_styring_af_biograf
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-
             // Opret en liste af film
             List<string> filmListe = new List<string>
             {
@@ -43,91 +41,94 @@ namespace Website_til_styring_af_biograf
                 goto FilmValg;
             }
 
-        SædeValg:
-            // Opret en liste med sæderne
+            // Spørg hvor mange sæder brugeren vil reservere.
+            Console.WriteLine("Hvor mange sæder vil du reservere?");
+            string antalSæderInput = Console.ReadLine();
+            int antalSæder;
+
+            // Kontroller om input er et gyldigt tal
+            if (!int.TryParse(antalSæderInput, out antalSæder) || antalSæder <= 0)
+            {
+                Console.WriteLine("Ugyldigt antal. Prøv igen.");
+                goto FilmValg;
+            }
+
             List<string> sædeListe = new List<string>
             {
-                "Sædet helt til venstre",
-                "Sædet til venstre fra midten",
-                "Sædet i midten",
-                "Sædet til højre fra midten",
-                "Sædet helt til højre"
+                "Sæde nr. 1",
+                "Sæde nr. 2",
+                "Sæde nr. 3",
+                "Sæde nr. 4",
+                "Sæde nr. 5"
             };
 
-            // Udskriv menuen med sæderne
-            Console.WriteLine("Vælg et sæde ved at indtaste nummeret:");
-            for (int i = 0; i < sædeListe.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {sædeListe[i]}");
-            }
+            List<string> valgteSæder = new List<string>();
 
-            // Læs brugerens input
-            Console.Write("Indtast sædenummer: ");
-            string input2 = Console.ReadLine();
-            int sædeValg;
+            for (int i = 0; i < antalSæder; i++)
+            {
+            SædeValg:
+                Console.WriteLine("Vælg et sæde ved at indtaste nummeret:");
+                for (int j = 0; j < sædeListe.Count; j++)
+                {
+                    if (!valgteSæder.Contains(sædeListe[j]))
+                    {
+                        Console.WriteLine($"{j + 1}. {sædeListe[j]}");
+                    }
+                }
 
-            // Kontroller om input er et gyldigt tal og inden for det rigtige område
-            if (int.TryParse(input2, out sædeValg) && sædeValg > 0 && sædeValg <= sædeListe.Count)
-            {
-                // Vis det valgte sæde
-                Console.WriteLine($"Du har valgt: {sædeListe[sædeValg - 1]}");
-            }
-            else
-            {
-                // Udspyt fejlkode og lad dem prøve igen
-                Console.WriteLine("Ugyldigt valg. Prøv igen.");
-                goto SædeValg;
+                Console.Write("Indtast sædenummer: ");
+                string inputSV = Console.ReadLine();
+                int sædeValg;
+
+                if (int.TryParse(inputSV, out sædeValg) && sædeValg > 0 && sædeValg <= sædeListe.Count && !valgteSæder.Contains(sædeListe[sædeValg - 1]))
+                {
+                    valgteSæder.Add(sædeListe[sædeValg - 1]);
+                    Console.WriteLine($"Du har valgt: {sædeListe[sædeValg - 1]}");
+                }
+                else
+                {
+                    Console.WriteLine("Ugyldigt valg eller sæde allerede valgt. Prøv igen.");
+                    goto SædeValg;
+                }
             }
 
         Reservationsvalg:
-            // Opret en liste med valg af reservation
             List<string> reservationsliste = new List<string>
             {
                 "Ja",
                 "Nej"
             };
 
-            // Udskriv menuen med reservationsvalg
-            Console.WriteLine("Vil du reservere dette sæde?");
+            Console.WriteLine("Vil du reservere de valgte sæder?");
             for (int i = 0; i < reservationsliste.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {reservationsliste[i]}");
             }
 
-            // Læs brugerens input
             Console.Write("Indtast valg (1 for Ja, 2 for Nej): ");
             string input3 = Console.ReadLine();
             int reservationsValg;
-
-            //generer et tilfældigt tal, til reservationsnummer
-            Random rnd= new Random();
-            int reservationsnummer = rnd.Next(0, 999999999); 
+            Random rnd = new Random();
+            int reservationsnummer = rnd.Next(0, 999999999); // Generer et 9-cifret nummer
             string formattedReservationsnummer = reservationsnummer.ToString().PadLeft(13, '0');
 
-
-
-            // Kontroller om input er et gyldigt tal og inden for det rigtige område
             if (int.TryParse(input3, out reservationsValg) && reservationsValg > 0 && reservationsValg <= reservationsliste.Count)
             {
-                // Vis reservationsbekræftelsen
                 if (reservationsValg == 1)
                 {
-                    // Få input med for- og efternavn
                     Console.WriteLine("Indtast fornavn");
                     string fornavn = Console.ReadLine();
                     Console.WriteLine("Indtast efternavn");
                     string efternavn = Console.ReadLine();
-                    //udskriver kvittering
-                    Console.WriteLine($"Kære {fornavn} {efternavn}, du har reserveret {sædeListe[sædeValg - 1]} til filmen {filmListe[filmValg - 1]}, med reservationsnummeret {formattedReservationsnummer}.");
+                    Console.WriteLine($"Kære {fornavn} {efternavn}, du har reserveret følgende sæder til filmen {filmListe[filmValg - 1]}: {string.Join(", ", valgteSæder)}. Dit reservationsnummer er {formattedReservationsnummer}.");
                 }
                 else
                 {
-                    Console.WriteLine("Du valgte ikke at reservere et sæde til den valgte film?");
+                    Console.WriteLine("Du valgte ikke at reservere sæder til den valgte film.");
                 }
             }
             else
             {
-                // Udspyt fejlkode og lad dem prøve igen
                 Console.WriteLine("Ugyldigt valg. Prøv igen.");
                 goto Reservationsvalg;
             }
