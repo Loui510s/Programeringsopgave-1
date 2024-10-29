@@ -121,6 +121,7 @@ namespace Website_til_styring_af_biograf
                 else
                 {
                     Console.WriteLine("Du valgte ikke at reservere sæder til den valgte film.");
+                    goto FilmValg;
                 }
             }
             else
