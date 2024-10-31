@@ -1,85 +1,146 @@
 using System;
 using System.Collections.Generic;
 
-namespace Website_til_styring_af_biograf
+namespace BiografSystem
 {
-    internal class Program
+    //laver relevant klasse for reservation af sæde 
+    internal class Film
     {
-        static void Main(string[] args)
+        public string Navn { get; set; }
+        public List<string> Sæder { get; private set; } = new List<string> { "Sæde nr. 1", "Sæde nr. 2", "Sæde nr. 3", "Sæde nr. 4", "Sæde nr. 5" };
+    }
+    //laver relevant klasse for reservation af film
+    internal class Reservation
+    {
+        public Film Film { get; set; }
+        public List<string> Seats { get; set; }
+        public string ReservationNumber { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+    //laver relevant klasse for at kunne foretage en bestilling bestille
+    internal class BestillingHandler
+    {
+        private List<Reservation> reservations = new List<Reservation>();
+        private List<Film> filmListe = new List<Film>
         {
-            // Opret en liste af film
-            List<string> filmListe = new List<string>
-            {
-                "How To Train Your Dragon 2",
-                "Shrek 4",
-                "Fat Albert"
-            };
+            new Film { Navn = "How To Train Your Dragon 2" },
+            new Film { Navn = "Shrek 4" },
+            new Film { Navn = "Fat Albert" }
+        };
+
+        public void Reserve()
+        {
             //laver filmvalg
         FilmValg:
-            Console.WriteLine("Vælg en film du gerne vil se, ved at indtaste nummeret:");
+            Console.WriteLine("Vælg en film eller gå tilbage til hovedmenuen:");
+            Console.WriteLine("0. Tilbage til hovedmenuen");
             for (int i = 0; i < filmListe.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {filmListe[i]}");
+                Console.WriteLine($"{i + 1}. {filmListe[i].Navn}");
             }
 
-            Console.Write("Indtast filmnummer: ");
-            string input = Console.ReadLine();
-            int filmValg;
+            int filmValg = VælgFilm();
+            if (filmValg == 0) return;  // Gå tilbage til hovedmenuen
+            if (filmValg == -1) goto FilmValg;
 
-            if (int.TryParse(input, out filmValg) && filmValg > 0 && filmValg <= filmListe.Count)
+            Film valgtFilm = filmListe[filmValg - 1];
+
+        AntalSæderValg:
+            int antalSæder = HentAntalSæder();
+            if (antalSæder == -1) goto AntalSæderValg;
+
+            List<string> valgteSæder = HentSæder(valgtFilm, antalSæder);
+            if (valgteSæder == null) goto AntalSæderValg;
+
+            string reservationNumber = GenererReservationsnummer();
+
+            Console.Write("Indtast fornavn (eller 0 for at gå til hovedmenu): ");
+            string fornavn = Console.ReadLine();
+            if (fornavn == "0") return;  // Gå tilbage til hovedmenuen
+            Console.Write("Indtast efternavn: ");
+            string efternavn = Console.ReadLine();
+
+            reservations.Add(new Reservation
             {
-                Console.WriteLine($"Du har valgt: {filmListe[filmValg - 1]}");
+                Film = valgtFilm,
+                Seats = valgteSæder,
+                ReservationNumber = reservationNumber,
+                FirstName = fornavn,
+                LastName = efternavn
+            });
+
+            Console.WriteLine($"Reservation oprettet med nummer {reservationNumber} for {valgtFilm.Navn}. Sæder: {string.Join(", ", valgteSæder)}");
+        }
+
+        public void Afreserve()
+        {
+        Afbestilling:
+            Console.Write("Indtast reservationsnummer (eller 0 for at gå til hovedmenu): ");
+            string reservationsNummer = Console.ReadLine();
+            if (reservationsNummer == "0") return;  // Gå tilbage til hovedmenuen
+
+            var reservation = reservations.Find(r => r.ReservationNumber == reservationsNummer);
+            if (reservation != null)
+            {
+                reservations.Remove(reservation);
+                Console.WriteLine($"Reservation {reservationsNummer} er afbestilt.");
             }
             else
             {
-                Console.WriteLine("Ugyldigt valg. Prøv igen.");
-                goto FilmValg;
+                Console.WriteLine("Ingen reservation fundet med det nummer. Prøv igen.");
+                goto Afbestilling;
             }
-            SV:
-            // Spørg hvor mange sæder brugeren vil reservere
-            Console.WriteLine("Hvor mange sæder vil du reservere?");
-            string antalSæderInput = Console.ReadLine();
-            int antalSæder;
+        }
 
-            // Kontroller om input er et gyldigt tal og om det er indenfor det tilladte antal
-            if (!int.TryParse(antalSæderInput, out antalSæder) || antalSæder <= 0 || antalSæder > 5)
+        private int VælgFilm()
+        {
+            Console.Write("Indtast filmnummer (eller 0 for at gå til hovedmenu): ");
+            if (int.TryParse(Console.ReadLine(), out int filmValg) && filmValg >= 0 && filmValg <= filmListe.Count)
             {
-                Console.WriteLine("Ugyldigt antal. Du kan maksimalt reservere 5 sæder. Prøv igen.");
-                goto SV;
+                return filmValg;
             }
+            Console.WriteLine("Ugyldigt valg. Prøv igen.");
+            return -1;
+        }
 
-            // Liste over tilgængelige sæder
-            List<string> sædeListe = new List<string>
+        private int HentAntalSæder()
+        {
+            Console.Write("Hvor mange sæder vil du reservere? (maks. 5, eller 0 for at gå til hovedmenu): ");
+            if (int.TryParse(Console.ReadLine(), out int antalSæder) && (antalSæder == 0 || (antalSæder > 0 && antalSæder <= 5)))
             {
-                "Sæde nr. 1",
-                "Sæde nr. 2",
-                "Sæde nr. 3",
-                "Sæde nr. 4",
-                "Sæde nr. 5"
-            };
+                if (antalSæder == 0) return 0; // Gå tilbage til hovedmenuen
+                return antalSæder;
+            }
+            Console.WriteLine("Ugyldigt antal. Prøv igen.");
+            return -1;
+        }
 
+        private List<string> HentSæder(Film film, int antalSæder)
+        {
             List<string> valgteSæder = new List<string>();
-            //laver sædevalg
-            for (int i = 0; i < antalSæder; i++)
+            int i = 0;
+
+        SædeValg:
+            if (i < antalSæder)
             {
-            SædeValg:
-                Console.WriteLine("Vælg et sæde ved at indtaste nummeret:");
-                for (int j = 0; j < sædeListe.Count; j++)
+                Console.WriteLine("Vælg et sæde eller indtast 0 for at gå til hovedmenuen:");
+                for (int j = 0; j < film.Sæder.Count; j++)
                 {
-                    if (!valgteSæder.Contains(sædeListe[j]))
+                    if (!valgteSæder.Contains(film.Sæder[j]))
                     {
-                        Console.WriteLine($"{j + 1}. {sædeListe[j]}");
+                        Console.WriteLine($"{j + 1}. {film.Sæder[j]}");
                     }
                 }
 
-                Console.Write("Indtast sædenummer: ");
-                string inputSV = Console.ReadLine();
-                int sædeValg;
+                string input = Console.ReadLine();
+                if (input == "0") return null;  // Gå tilbage til hovedmenuen
 
-                if (int.TryParse(inputSV, out sædeValg) && sædeValg > 0 && sædeValg <= sædeListe.Count && !valgteSæder.Contains(sædeListe[sædeValg - 1]))
+                if (int.TryParse(input, out int sædeValg) && sædeValg > 0 && sædeValg <= film.Sæder.Count && !valgteSæder.Contains(film.Sæder[sædeValg - 1]))
                 {
-                    valgteSæder.Add(sædeListe[sædeValg - 1]);
-                    Console.WriteLine($"Du har valgt: {sædeListe[sædeValg - 1]}");
+                    valgteSæder.Add(film.Sæder[sædeValg - 1]);
+                    i++;
+                    goto SædeValg; // Gå tilbage til valg af sæder, hvis ikke alle er valgt
                 }
                 else
                 {
@@ -87,51 +148,38 @@ namespace Website_til_styring_af_biograf
                     goto SædeValg;
                 }
             }
-            //Laver reservationsvalg
-        Reservationsvalg:
-            List<string> reservationsliste = new List<string>
-            {
-                "Ja",
-                "Nej"
-            };
 
-            Console.WriteLine("Vil du reservere de valgte sæder?");
-            for (int i = 0; i < reservationsliste.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {reservationsliste[i]}");
-            }
+            return valgteSæder;
+        }
 
-            Console.Write("Indtast valg (1 for Ja, 2 for Nej): ");
-            string input3 = Console.ReadLine();
-            int reservationsValg;
-            Random rnd = new Random();
-            int reservationsnummer = rnd.Next(0, 999999999); // Generer et 9-cifret nummer
-            string formattedReservationsnummer = reservationsnummer.ToString().PadLeft(13, '0');
-            
-            //lav et reservationsvalg med evt. reservationsnummer.
-            if (int.TryParse(input3, out reservationsValg) && reservationsValg > 0 && reservationsValg <= reservationsliste.Count)
-            {
-                if (reservationsValg == 1)
-                {
-                    Console.WriteLine("Indtast fornavn");
-                    string fornavn = Console.ReadLine();
-                    Console.WriteLine("Indtast efternavn");
-                    string efternavn = Console.ReadLine();
-                    Console.WriteLine($"Kære {fornavn} {efternavn}, du har reserveret følgende sæder til filmen {filmListe[filmValg - 1]}: {string.Join(", ", valgteSæder)}. Dit reservationsnummer er {formattedReservationsnummer}.");
-                }
-                else
-                {
-                    Console.WriteLine("Du valgte ikke at reservere sæder til den valgte film.");
-                    goto FilmValg;
-                }
-            }
+        private string GenererReservationsnummer()
+        {
+            return new Random().Next(100000000, 999999999).ToString("D9");
+        }
+    }
+    //laver relevant klasse til en start menu
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            BestillingHandler handler = new BestillingHandler();
+
+        StartValg:
+            Console.WriteLine("1. Reservér billet\n2. Afbestil billet\n0. Afslut");
+            string valg = Console.ReadLine();
+
+            if (valg == "1")
+                handler.Reserve();
+            else if (valg == "2")
+                handler.Afreserve();
+            else if (valg == "0")
+                return; // Afslut programmet
             else
             {
                 Console.WriteLine("Ugyldigt valg. Prøv igen.");
-                goto Reservationsvalg;
             }
 
-            Console.ReadLine();
+            goto StartValg; // Gå tilbage til startmenuen efter en handling
         }
     }
 }
