@@ -3,3 +3,4 @@ Programeringsopgave 1, omhandler at bygge en website i C# der kan styre en biogr
 1. at kunne bestille en billet til en film med et hvis antal sæder
 2. kunne få en kvittering
 3. kunne afbestille billetten
+Koden er skrevet i C# med .NET implementering og bliver lavet som en konsol application
